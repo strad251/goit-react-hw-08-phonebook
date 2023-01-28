@@ -18,6 +18,7 @@ const ContactList = () => {
 
   return (
     <>
+      <h1 className={css.Title}>Contacts</h1>
       <ul className={css.list}>
         {filter.map(contact => (
       <li key={contact.id} className={css.listItem}>

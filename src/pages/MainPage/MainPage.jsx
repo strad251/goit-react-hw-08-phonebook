@@ -12,7 +12,6 @@ import AppBar from 'components/AppBar/AppBar';
 import { ContactForm } from 'components/ContactForm/ContactForm';
 import { Filter } from 'components/Filter/Filter';
 import ContactList from 'components/ContactsList/ContactsList';
-import { Title } from 'components/Title/Title';
 
 const override = {
   position: 'absolute',
@@ -37,10 +36,8 @@ function MainPage() {
       <AppBar />
       {isLoggedIn ? (
         <>
-          <Title text="Phonebook" />
           <ContactForm />
           <Filter />
-          <Title text="Contacts" />
           <ContactList />
           <BounceLoader
             cssOverride={override}
