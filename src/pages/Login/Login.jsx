@@ -1,10 +1,10 @@
-import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from 'redux/user/operations';
 
 import css from './Login.module.css';
 import { selectIsLoggedIn } from 'redux/user/selectors';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const dispatch = useDispatch();

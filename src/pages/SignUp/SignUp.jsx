@@ -1,9 +1,9 @@
-import { Link, useNavigate } from 'react-router-dom';
 import css from './SignUp.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { createUser } from 'redux/user/operations';
 import { selectIsLoggedIn } from 'redux/user/selectors';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 
