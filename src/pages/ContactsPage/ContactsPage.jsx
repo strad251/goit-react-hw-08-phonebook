@@ -1,17 +1,15 @@
-
-
 import { useSelector } from 'react-redux';
 import { BounceLoader } from 'react-spinners';
-import { selectIsLoading } from 'redux/contacts/contactsSlice';
-import { selectIsLoggedIn } from 'redux/user/userSlice';
-import css from './MainPage.module.css';
+
+import css from './ContactsPage.module.css'
 import { useNavigate } from 'react-router';
 import { useEffect } from 'react';
 
-import AppBar from 'components/AppBar/AppBar';
 import { ContactForm } from 'components/ContactForm/ContactForm';
 import { Filter } from 'components/Filter/Filter';
 import ContactList from 'components/ContactsList/ContactsList';
+import { selectIsLoading } from 'redux/contacts/selectors';
+import { selectIsLoggedIn } from 'redux/user/selectors';
 
 const override = {
   position: 'absolute',
@@ -20,7 +18,7 @@ const override = {
   display: 'block',
 };
 
-function MainPage() {
+function ContactsPage() {
   const loading = useSelector(selectIsLoading);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const navigate = useNavigate();
@@ -33,7 +31,6 @@ function MainPage() {
 
   return (
     <>
-      <AppBar />
       {isLoggedIn ? (
         <>
           <ContactForm />
@@ -55,4 +52,4 @@ function MainPage() {
   );
 }
 
-export default MainPage;
+export default ContactsPage;

@@ -4,7 +4,8 @@ import { nanoid } from 'nanoid';
 import { contactSelector } from 'redux/contacts/selectors';
 
 import css from './ContactForm.module.css'
-import { addContact } from 'redux/services/getContacts';
+import { addContact } from 'redux/contacts/operations';
+
 
 export const ContactForm = () => {
   

@@ -2,7 +2,8 @@ import UserMenu from 'components/UserMenu/UserMenu';
 import css from './AppBar.module.css';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectIsLoggedIn } from 'redux/user/userSlice';
+import { selectIsLoggedIn } from 'redux/user/selectors';
+
 
 function AppBar() {
   const isLoggedIn = useSelector(selectIsLoggedIn);
@@ -14,14 +15,14 @@ function AppBar() {
         {isLoggedIn ? (
           <UserMenu />
         ) : (
-          <>
-            <Link to={'/signup'}>
-              Sign Up
+          <div className={css.nav}>
+            <Link className={css.link} to={'/register'}>
+              Register
             </Link>
-            <Link to={'/login'}>
+            <Link className={css.link} to={'/login'}>
               Log In
             </Link>
-          </>
+          </div>
         )}
       </div>
     </div>

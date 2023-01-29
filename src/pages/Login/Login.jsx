@@ -1,11 +1,10 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { selectIsLoggedIn } from 'redux/user/userSlice';
-import { useEffect } from 'react';
-import { loginUser } from 'redux/services/createUser';
+import { loginUser } from 'redux/user/operations';
 
 import css from './Login.module.css';
+import { selectIsLoggedIn } from 'redux/user/selectors';
+import { useEffect } from 'react';
 
 function Login() {
   const dispatch = useDispatch();
@@ -17,37 +16,30 @@ function Login() {
       navigate('/');
     }
   }, [isLoggedIn, navigate]);
-
+  
   function handleLogin(e) {
     e.preventDefault();
-    const user = {
+    dispatch(
+      loginUser({
       email: e.target.elements[0].value,
       password: e.target.elements[1].value,
-    };
-    if (!user.email.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
-      alert('Invalid email!');
-    } else {
-      dispatch(loginUser(user));
-    }
-  }
+      })
+    );
+  };
 
   return (
     <form className={css.form} onSubmit={handleLogin}>
-      <label className={css.label} htmlFor="email">
+      <label className={css.label}>
         Email
       </label>
-      <input type="email" className={css.input} />
-      <label className={css.label} htmlFor="password">
+      <input type="email" name="email" className={css.input} />
+      <label className={css.label}>
         Password
       </label>
-      <input type="password" className={css.input} minLength="8" />
+      <input type="password" name="password" className={css.input} minLength="8" />
       <button className={css.Btn} type="submit">
-        Login
+        Submit
       </button>
-      <p className={css.text}>Don't have an account yet?</p>
-      <Link className={css.Btn} to="/signup">
-        Sign Up
-      </Link>
     </form>
   );
 }

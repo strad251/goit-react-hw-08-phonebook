@@ -1,10 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {
-  createUser,
-  fetchCurrentUser,
-  loginUser,
-  logoutUser,
-} from 'redux/services/createUser';
+import { createUser, fetchCurrentUser, loginUser, logoutUser } from './operations';
+
 
 export const userSlice = createSlice({
   name: 'user',
@@ -16,70 +12,66 @@ export const userSlice = createSlice({
     isLoggedIn: false,
   },
   reducers: {},
-  extraReducers: builder => 
-    builder
-    .addCase(createUser.pending, state => {
+  extraReducers: builder => {
+    builder.addCase(createUser.pending, state => {
       state.isLoading = true;
-    })
-    .addCase(createUser.fulfilled, (state, { payload }) => {
+    });
+    builder.addCase(createUser.fulfilled, (state, action) => {
       state.isLoading = false;
       state.error = null;
-      state.userData = payload.user;
-      state.token = payload.token;
+      state.userData = action.payload.user;
+      state.token = action.payload.token;
       state.isLoggedIn = true;
-    })
-    .addCase(createUser.rejected, (state, { payload }) => {
+    });
+    builder.addCase(createUser.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = payload;
-    })
-    .addCase(loginUser.pending, state => {
+      state.error = action.payload;
+    });
+    builder.addCase(loginUser.pending, state => {
       state.isLoading = true;
-    })
-    .addCase(loginUser.fulfilled, (state, { payload }) => {
+    });
+    builder.addCase(loginUser.fulfilled, (state, action) => {
       state.isLoading = false;
       state.error = null;
-      state.userData = payload.user;
-      state.token = payload.token;
+      state.userData = action.payload.user;
+      state.token = action.payload.token;
       state.isLoggedIn = true;
-    })
-    .addCase(loginUser.rejected, (state, { payload }) => {
+    });
+    builder.addCase(loginUser.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = payload;
-    })
-    .addCase(fetchCurrentUser.pending, state => {
+      state.error = action.payload;
+    });
+    builder.addCase(fetchCurrentUser.pending, state => {
       state.isLoading = true;
-    })
-    .addCase(fetchCurrentUser.fulfilled, (state, { payload }) => {
+    });
+    builder.addCase(fetchCurrentUser.fulfilled, (state, action) => {
       state.isLoading = false;
       state.error = null;
-      state.userData = payload;
+      state.userData = action.payload;
       state.isLoggedIn = true;
-    })
-    .addCase(fetchCurrentUser.rejected, (state, { payload }) => {
+    });
+    builder.addCase(fetchCurrentUser.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = payload;
-    })
-    .addCase(logoutUser.pending, state => {
+      state.error = action.payload;
+    });
+    builder.addCase(logoutUser.pending, state => {
       state.isLoading = true;
-    })
-    .addCase(logoutUser.fulfilled, (state) => {
+    });
+    builder.addCase(logoutUser.fulfilled, (state, action) => {
       state.isLoading = false;
       state.error = null;
       state.userData = { name: null, email: null, password: null };
       state.token = null;
       state.isLoggedIn = false;
-    })
-    .addCase(logoutUser.rejected, (state, { payload }) => {
+    });
+    builder.addCase(logoutUser.rejected, (state, action) => {
       state.isLoading = false;
-      state.error = payload;
-    })
-  ,
+      state.error = action.payload;
+    });
+  },
 });
 
+// export const { setFilter } = filterSlice.actions;
 
 export const userReducer = userSlice.reducer;
 
-export const selectUser = store => store.user.userData;
-export const selectUserError = store => store.user.error;
-export const selectIsLoggedIn = store => store.user.isLoggedIn;
-export const selectToken = store => store.user.token;

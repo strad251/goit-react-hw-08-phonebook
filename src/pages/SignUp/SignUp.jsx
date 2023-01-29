@@ -1,9 +1,11 @@
 import { Link, useNavigate } from 'react-router-dom';
 import css from './SignUp.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { createUser } from 'redux/services/createUser';
-import { selectIsLoggedIn } from 'redux/user/userSlice';
+import { createUser } from 'redux/user/operations';
+import { selectIsLoggedIn } from 'redux/user/selectors';
 import { useEffect } from 'react';
+
+
 
 function SignUp() {
   const dispatch = useDispatch();
@@ -15,43 +17,35 @@ function SignUp() {
       navigate('/');
     }
   }, [isLoggedIn, navigate]);
-
-  function handleSignUp(e) {
+  const handleSignUp = e => {
     e.preventDefault();
-    const user = {
+  
+    dispatch(
+      createUser({
       name: e.target.elements[0].value,
       email: e.target.elements[1].value,
       password: e.target.elements[2].value,
-    };
-    if (!user.email.match(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
-      alert('Invalid email!');
-    } else {
-      dispatch(createUser(user));
-    }
-  }
+      })
+    );
+  };
 
   return (
     <form className={css.form} onSubmit={handleSignUp}>
-      <label className={css.label} htmlFor="name">
+      <label className={css.label}>
         Name
       </label>
-      <input type="text" className={css.input} />
-      <label className={css.label} htmlFor="email">
+      <input type="text" name="name" className={css.input} />
+      <label className={css.label}>
         Email
       </label>
-      <input type="email" className={css.input} />
+      <input type="email" name="email" className={css.input} />
       <label className={css.label} htmlFor="password">
         Password
       </label>
-      <input type="password" className={css.input} minLength="8" />
+      <input className={css.input} type="password" name="password" />
       <button className={css.submit} type="submit">
-        Sign Up
+        Submit
       </button>
-      <p className={css.text}>Already have an account?</p>
-      <Link to="/login" className={css.submit}>
-        Login
-      </Link>
-      {isLoggedIn && <p>Success!</p>}
     </form>
   );
 }
