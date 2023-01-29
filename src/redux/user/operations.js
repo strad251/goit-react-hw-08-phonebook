@@ -19,11 +19,8 @@ export const createUser = createAsyncThunk(
       const { data } = await axios.post('users/signup', user);
       token.set(data.token);
       return data;
-    } catch (err) {
-      if (err instanceof Error) {
-        return thunkAPI.rejectWithValue(err.message);
-      }
-      console.log('unknown error');
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
@@ -34,13 +31,10 @@ export const loginUser = createAsyncThunk(
       const { data } = await axios.post('users/login', user);
       token.set(data.token);
       return data;
-    } catch (err) {
-      if (err instanceof Error) {
-        return thunkAPI.rejectWithValue(err.message);
-      }
-      console.log('unknown error');
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
-  }
+    }
 );
 export const logoutUser = createAsyncThunk(
   'user/logout',
@@ -49,32 +43,26 @@ export const logoutUser = createAsyncThunk(
       const { data } = await axios.post('users/logout', user);
       token.unset();
       return data;
-    } catch (err) {
-      if (err instanceof Error) {
-        return thunkAPI.rejectWithValue(err.message);
-      }
-      console.log('unknown error');
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
-  }
-);
+  });
 export const fetchCurrentUser = createAsyncThunk(
   'user/fetchCurrentUser',
   async (_, thunkAPI) => {
+    const state = thunkAPI.getState();
+    const persistedToken = state.auth.token;
+
+    if (!persistedToken) {
+      return thunkAPI.rejectWithValue('Unable to fetch user');
+    }
+
     try {
-      const state = thunkAPI.getState();
-      const persistedToken = state.user.token;
-      if (persistedToken) {
-        token.set(persistedToken);
-        const { data } = await axios.get('users/current');
-        console.log(data);
-        return data;
-      }
-      return thunkAPI.rejectWithValue('Please login to proceed');
-    } catch (err) {
-      if (err instanceof Error) {
-        return thunkAPI.rejectWithValue(err.message);
-      }
-      console.log('unknown error');
+      token.set(persistedToken);
+      const { data } = await axios.get('/users/current');
+      return data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
     }
   }
 );

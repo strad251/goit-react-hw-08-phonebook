@@ -22,7 +22,7 @@ export const App = () => {
     dispatch(fetchCurrentUser());
   }, [dispatch]);
 
-  return ( isRefreshing ? (
+  return  isRefreshing ? (
     <b>Refreshing user...</b>
   ) : (
     <Suspense>
@@ -54,5 +54,5 @@ export const App = () => {
           </Route>
       </Routes>
     </Suspense>
-  )); 
+  ); 
 };

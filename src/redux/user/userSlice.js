@@ -57,7 +57,7 @@ export const userSlice = createSlice({
     builder.addCase(logoutUser.pending, state => {
       state.isLoading = true;
     });
-    builder.addCase(logoutUser.fulfilled, (state, action) => {
+    builder.addCase(logoutUser.fulfilled, (state) => {
       state.isLoading = false;
       state.error = null;
       state.userData = { name: null, email: null, password: null };
@@ -70,8 +70,6 @@ export const userSlice = createSlice({
     });
   },
 });
-
-// export const { setFilter } = filterSlice.actions;
 
 export const userReducer = userSlice.reducer;
 
