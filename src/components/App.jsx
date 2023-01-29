@@ -28,30 +28,30 @@ export const App = () => {
     <Suspense>
         <Routes>
           <Route path="/" element={<Layout />}>
-             <Route index element={<HomePage />} />
-      <Route
-          path="/login"
-          element={
-            <RestrictedRoute redirectTo="/contacts" component={<Login />}
+          <Route index element={<HomePage />} />
+          <Route
+              path="/login"
+              element={
+                <RestrictedRoute redirectTo="/contacts" component={<Login />}
+                  />
+                }
               />
-            }
-          />
-      <Route
-            path="/register"
-            element={
-              <RestrictedRoute
-                redirectTo="/contacts"
-                component={<SignUp />}
+          <Route
+                path="/register"
+                element={
+                  <RestrictedRoute
+                    redirectTo="/contacts"
+                    component={<SignUp />}
+                  />
+                }
               />
-            }
-          />
-      <Route
-          path="/contacts"
-          element={
-          <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
-            }
-            />
-       </Route>
+          <Route
+              path="/contacts"
+              element={
+              <PrivateRoute redirectTo="/login" component={<ContactsPage />} />
+                }
+                />
+          </Route>
       </Routes>
     </Suspense>
   )); 

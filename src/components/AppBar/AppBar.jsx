@@ -15,7 +15,10 @@ function AppBar() {
         {isLoggedIn ? (
           <UserMenu />
         ) : (
-          <div className={css.nav}>
+            <div className={css.nav}>
+                 <Link className={css.link} to={'/'}>
+              Home
+          </Link>
             <Link className={css.link} to={'/register'}>
               Register
             </Link>
